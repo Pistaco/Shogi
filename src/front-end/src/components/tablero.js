@@ -1,7 +1,8 @@
-import react, { createContext, useContext, useEffect, useState } from "react";
+import react, { createContext, useContext, useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import Casilla from "./casilla"
 
+import CoordenadaProvider from "./../contexts/contextCoordenada";
 
 
 const TableroS = styled.div`
@@ -13,12 +14,16 @@ const ColumnaS = styled.div`
 display: flex;
 flex-direction: column;
 `
+
+
+
 const Tablero = () => {
 
 
     return(
         <TableroS>
             <ListaColumna>
+        <CoordenadaProvider>
             <Columna column={1}></Columna>
             <Columna column={2}></Columna>
             <Columna column={3}></Columna>
@@ -28,6 +33,7 @@ const Tablero = () => {
             <Columna column={7}></Columna>
             <Columna column={8}></Columna>
             <Columna column={9}></Columna>
+        </CoordenadaProvider>
             </ListaColumna>
         </TableroS>
     )

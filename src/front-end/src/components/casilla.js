@@ -6,7 +6,7 @@ import styled from "styled-components";
 const Casilla = ({row, column}) => {
 
 
-    const {handCoo} = useContext(CoordenadaContext);
+    const {handCoo, Tablero_matrix, hand_matrix} = useContext(CoordenadaContext);
     const [coordenada, _] = useState([row, column])
     const [pieza, moverPieza] = useState(null);
     const [color, HandColor] = useState(false);
@@ -24,6 +24,7 @@ border: 1px solid black;
         else {
         HandColor(false);
         }
+        hand_matrix([coordenada, "P"])
     }
 
 
