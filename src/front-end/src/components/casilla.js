@@ -1,6 +1,7 @@
-import react, {useContext, useState} from "react";
+import react, {useContext, useEffect, useState} from "react";
 import {CoordenadaContext} from "./../contexts/contextCoordenada";
 import styled from "styled-components";
+import Mover_pieza from "./../helpers/moverpieza";
 
 const Pieza = styled.div`
 display: flex;
@@ -11,7 +12,7 @@ font-size: 3rem;
 
 const Casilla = ({row, column}) => {
 
-    const {handCoo, Tablero_matrix, hand_matrix} = useContext(CoordenadaContext);
+    const {Tablero_matrix, handInicial, handFinal, ColorAlarm, AlarmHand } = useContext(CoordenadaContext);
     const [coordenada, _] = useState([row, column])
     const [pieza, HandPieza] = useState(null);
     const [color, HandColor] = useState(false);
@@ -23,6 +24,10 @@ const Casilla = ({row, column}) => {
     border: 1px solid black;
     `;
 
+    useEffect(() => {
+        help_pieza();
+    }, [Tablero_matrix])
+
     const help_pieza = () => {
         const [x, y] = coordenada;
         const tpieza = Tablero_matrix[x - 1][y - 1]
@@ -30,16 +35,29 @@ const Casilla = ({row, column}) => {
     }
     
     const HandClick = () => {
-        if (color === false) {
-            HandColor(true);
-            hand_matrix([coordenada, "P"]);
+
+        if (ColorAlarm === true) {
+            ListenSecundElement();
+            return;
         }
-        else {
-        HandColor(false);
-        hand_matrix([coordenada, null]);
+
+        if(color === false) {
+            HandColor(true)
+            ListenFirstElement();
         }
-        help_pieza();
+    };
+
+    const ListenFirstElement = () => {
+        console.log("PRIMERO");
+        AlarmHand(true);
+        handInicial(coordenada);
+    };
+
+    const ListenSecundElement = () => {
+        console.log("SEGUNDO");
+        handFinal(coordenada);
     }
+
 
 
     return (
