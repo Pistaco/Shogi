@@ -16,7 +16,7 @@ const CoordenadaProvider = (props) => {
         handCoo
     }}
     >
-        {props.child}
+        {props.children}
     </CoordenadaContext.Provider>
     )
 }

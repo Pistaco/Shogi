@@ -1,6 +1,6 @@
 import react from "react";
 import styled from "styled-components";
-import CoordenadaProvider from "./contexts/contextCoordenada";
+import CoordenadaProvider, { CoordenadaContext } from "./contexts/contextCoordenada";
 import Tablero from "./components/tablero";
 
 const AppStyle = styled.div`
@@ -14,9 +14,11 @@ const AppStyle = styled.div`
 function App() {
   return (
     <div className="App">
+      <CoordenadaProvider>
         <AppStyle>
           <Tablero/>
         </AppStyle>
+      </CoordenadaProvider>
     </div>
   );
 }
