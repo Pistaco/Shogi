@@ -18,6 +18,7 @@ const Tablero = () => {
 
     return(
         <TableroS>
+            <ListaColumna>
             <Columna column={1}></Columna>
             <Columna column={2}></Columna>
             <Columna column={3}></Columna>
@@ -27,9 +28,16 @@ const Tablero = () => {
             <Columna column={7}></Columna>
             <Columna column={8}></Columna>
             <Columna column={9}></Columna>
+            </ListaColumna>
         </TableroS>
     )
 
+}
+
+const ListaColumna = (props) => {
+    return (
+        props.children
+    )
 }
 
 
