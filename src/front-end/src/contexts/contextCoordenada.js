@@ -1,8 +1,10 @@
 import react, { createContext, useEffect, useReducer, useState } from "react";
+import Autorizacion from "./../Autorizacion"
 
 export const CoordenadaContext = createContext();
 const CoordenadaProvider = (props) => {
 
+    const A_Autorizacion = Autorizacion()
     const [Pinicial, handInicial] = useState(null);
     const [Pfinal, handFinal] = useState(null);
     const [ColorAlarm, AlarmHand] = useState(false);
@@ -33,17 +35,20 @@ const CoordenadaProvider = (props) => {
 
     const Mover_pieza = () => {
         const [x , y] = Pinicial;
-        const elemento = Tablero_matrix[x - 1][y - 1];
+        const elemento = Tablero_matrix[x][y];
         console.log(elemento);
         hand_matrix([Pfinal, elemento]);
+        hand_matrix([Pinicial, null])
     }
 
     useEffect(() => {
         if (Pinicial !== null && Pfinal !== null) {
-            console.log(Pinicial);
-            console.log(Pfinal);
+
+            if(A_Autorizacion) {
             Mover_pieza();
-            reiniciarvalores();
+            reiniciarvalores(); 
+            }
+
         }
 
     }, [Pinicial, Pfinal])

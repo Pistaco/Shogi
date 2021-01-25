@@ -10,6 +10,13 @@ font-size: 3rem;
 
 `
 
+const CasillaS = styled.div`
+width: 6.5em;
+height: 6.5em;
+border: 1px solid black;
+`;
+
+
 const Casilla = ({row, column}) => {
 
     const {Tablero_matrix, handInicial, handFinal, ColorAlarm, AlarmHand } = useContext(CoordenadaContext);
@@ -17,16 +24,13 @@ const Casilla = ({row, column}) => {
     const [pieza, HandPieza] = useState(null);
     const [color, HandColor] = useState(false);
 
-    const CasillaS = styled.div`
-    width: 6.5em;
-    height: 6.5em;
-    background-color: ${color ? "#EFE46B" : "#DCC27F"};
-    border: 1px solid black;
-    `;
 
     useEffect(() => {
         help_pieza();
-    }, [])
+        if(ColorAlarm === false) {
+            HandColor(false);
+        }
+    })
 
     const help_pieza = () => {
         const [x, y] = coordenada;
@@ -45,7 +49,6 @@ const Casilla = ({row, column}) => {
             HandColor(true)
             ListenFirstElement();
         }
-        help_pieza();
     };
 
     const ListenFirstElement = () => {
@@ -60,9 +63,11 @@ const Casilla = ({row, column}) => {
     }
 
 
+    const style = {backgroundColor: color ? "#EFE46B" : "#DCC27F"}
+
 
     return (
-        <CasillaS onClick={HandClick} >
+        <CasillaS onClick={HandClick} style={style} >
             <Pieza>
                {pieza}
             </Pieza>
