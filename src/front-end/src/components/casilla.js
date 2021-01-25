@@ -26,11 +26,11 @@ const Casilla = ({row, column}) => {
 
     useEffect(() => {
         help_pieza();
-    }, [Tablero_matrix])
+    }, [])
 
     const help_pieza = () => {
         const [x, y] = coordenada;
-        const tpieza = Tablero_matrix[x - 1][y - 1]
+        const tpieza = Tablero_matrix[x][y]
         HandPieza(tpieza);
     }
     
@@ -45,6 +45,7 @@ const Casilla = ({row, column}) => {
             HandColor(true)
             ListenFirstElement();
         }
+        help_pieza();
     };
 
     const ListenFirstElement = () => {

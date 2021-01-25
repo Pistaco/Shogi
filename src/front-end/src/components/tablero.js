@@ -2,6 +2,7 @@ import react, { createContext, useContext, useEffect, useReducer, useState } fro
 import styled from "styled-components";
 import Casilla from "./casilla"
 
+import {CoordenadaContext} from "./../contexts/contextCoordenada";
 import CoordenadaProvider from "./../contexts/contextCoordenada";
 
 
@@ -18,12 +19,11 @@ flex-direction: column;
 
 
 const Tablero = () => {
-
-
     return(
         <TableroS>
             <ListaColumna>
         <CoordenadaProvider>
+            <Columna column={0}></Columna>
             <Columna column={1}></Columna>
             <Columna column={2}></Columna>
             <Columna column={3}></Columna>
@@ -32,7 +32,6 @@ const Tablero = () => {
             <Columna column={6}></Columna>
             <Columna column={7}></Columna>
             <Columna column={8}></Columna>
-            <Columna column={9}></Columna>
         </CoordenadaProvider>
             </ListaColumna>
         </TableroS>
@@ -50,6 +49,7 @@ const ListaColumna = (props) => {
 const Columna = ({column}) => {
     return ( 
         <ColumnaS>
+            <Casilla column={column} row={0}></Casilla>
             <Casilla column={column} row={1}></Casilla>
             <Casilla column={column} row={2}></Casilla>
             <Casilla column={column} row={3}></Casilla>
@@ -58,7 +58,6 @@ const Columna = ({column}) => {
             <Casilla column={column} row={6}></Casilla>
             <Casilla column={column} row={7}></Casilla>
             <Casilla column={column} row={8}></Casilla>
-            <Casilla column={column} row={9}></Casilla>
         </ColumnaS>
 
     )
