@@ -1,45 +1,42 @@
 from pprint import pprint
 from default import tablero_default
-from collections import namedtuple, UserList
+from collections import UserList
 
  
-def mover(coordenadas, mapa):
-    Inicial, Final = coordenadas.getvalues()
-    Objeto = mapa[Inicial.x][Inicial.y]
-    mapa[Final.x][Final.y] = Objeto
-    mapa[Inicial.x][Inicial.y] = None
-
-
-
-def verificador(elem, Coordenada_):
-
-        if len(elem) != 2:
-            raise Exception("Formato invalido")
-
+class Coordenada:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        
+    @classmethod
+    def veryficate(clc, data):
+        if len(data) != 2:
+            raise Exception("Error Tamaño")
         try:
-            x, y = elem
-            x = int(x)
-            y = int(y)
+            int(data)
         except:
-            raise Exception("Cuck")
-
-        if x not in range(0, 9):
-            raise Exception("Debe ser un numero en el rango valido")
-
-        if y not in range(0, 9):
-            raise Exception("Debe ser un numero en el rango valido")
-        return Coordenada_(x, y)
-
-
-Coordenada = namedtuple("Coordenada", ["x", "y"])
+            raise Exception("Error Numero")
+        x, y = data
+        
+        return clc(int(x), int(y))
+    
+    def __setattr__(self, name, value):
+        if isinstance(value, int):
+            if value not in range(9):
+                raise Exception(f"Fuera de rango {name}")
+            else:
+                super.__setattr__(self, name, value)
+        else:
+            super.__setattr__(self, name, value)
+        
+    
 
 class Pocisiones:
-    
     def asking(self):
         Inicial = input("Que pieza desea mover?\n")
-        self.inicial = verificador(Inicial, Coordenada)
+        self.inicial = Coordenada.veryficate(Inicial)
         Final = input("Hacia donde desea moverla?\n")
-        self.final = verificador(Final, Coordenada)
+        self.final = Coordenada.veryficate(Final)
     
     def __str__(self):
         return f"Inicial: {self.inicial} \n Final: {self.final}"
@@ -61,13 +58,23 @@ class Tablero:
     def __init__(self):
         default = tablero_default()
         self.data = Columna.generate_defaults(default)
+        self.Pocisiones = Pocisiones()
+    
+    def mover(self):
+        Inicial, Final = self.Pocisiones.getvalues()
+        Objeto = self.data[Inicial.x][Inicial.y]
+        self.data[Final.x][Final.y] = Objeto
+        self.data[Inicial.x][Inicial.y] = None
+    
+    def print(self):
+        pprint(self.data)
+        
     
         
 def run():
     tablero = Tablero()
-    pocisiones = Pocisiones()
-    pocisiones.asking()
-    mover(pocisiones, tablero.data)
-    pprint(tablero.data)
-        
+    tablero.Pocisiones.asking()
+    tablero.mover()
+    tablero.print()
+
 run()
