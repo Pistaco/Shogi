@@ -1,4 +1,4 @@
-from Estructura import Pocisiones, Casilla
+from Pocisiones import Pocisiones, Casilla
 from pprint import pprint
 from default import tablero_default
 from collections import UserList
