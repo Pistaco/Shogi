@@ -1,9 +1,9 @@
-import react, { createContext, useContext, useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import Casilla from "./casilla"
-
-import {CoordenadaContext} from "./../contexts/contextCoordenada";
 import CoordenadaProvider from "./../contexts/contextCoordenada";
+import UseAlert from "./Alert";
+import Reset from "./../reset_button";
+import { Fragment } from "react";
 
 
 const TableroS = styled.div`
@@ -19,22 +19,26 @@ flex-direction: column;
 
 
 const Tablero = () => {
+    const [Alert, display1, handMens] = UseAlert()
+    const [display, Handisplay] = display1
     return(
-        <TableroS>
-            <ListaColumna>
-        <CoordenadaProvider>
-            <Columna column={0}></Columna>
-            <Columna column={1}></Columna>
-            <Columna column={2}></Columna>
-            <Columna column={3}></Columna>
-            <Columna column={4}></Columna>
-            <Columna column={5}></Columna>
-            <Columna column={6}></Columna>
-            <Columna column={7}></Columna>
-            <Columna column={8}></Columna>
-        </CoordenadaProvider>
-            </ListaColumna>
-        </TableroS>
+        <>
+            <Reset/>
+            {display ? <Alert/> : null}
+            <TableroS>
+                <CoordenadaProvider Hand={[Handisplay, handMens]}>
+                    <Columna column={0}></Columna>
+                    <Columna column={1}></Columna>
+                    <Columna column={2}></Columna>
+                    <Columna column={3}></Columna>
+                    <Columna column={4}></Columna>
+                    <Columna column={5}></Columna>
+                    <Columna column={6}></Columna>
+                    <Columna column={7}></Columna>
+                    <Columna column={8}></Columna>
+                </CoordenadaProvider>
+            </TableroS>
+        </>
     )
 
 }

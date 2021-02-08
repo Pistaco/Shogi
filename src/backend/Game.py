@@ -7,18 +7,17 @@ class Game:
         self.pocisiones = self.tablero.Pocisiones
         self.turno = Turno()
     
-    def recolectar_datos(self):
-        self.pocisiones.asking(self.tablero.data)
+    def recolectar_datos(self, flask):
+        self.pocisiones.flask_get(flask, self.tablero.data)
         self.pieza = Peon.info(self.pocisiones, self.turno)
         self.pieza.mover()
+        self.run()
         
     
     def run(self):
-        while True:
-            self.tablero.print()
-            self.recolectar_datos()
-            self.tablero.mover()
-            self.turno.switch_turno()
+        self.tablero.mover()
+        self.tablero.print()
+        self.turno.switch_turno()
 
 class Turno:
     def __init__(self):
@@ -27,7 +26,8 @@ class Turno:
     def switch_turno(self):
         if self.turno == "B":
             self.turno = "W"
-        self.turno = "W"
+        elif self.turno == "W":
+            self.turno = "B"
         
     def comparate(self, turno):
         if turno == None:
@@ -39,4 +39,3 @@ class Turno:
 
 
 game = Game() 
-game.run()

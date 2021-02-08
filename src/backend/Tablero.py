@@ -41,7 +41,11 @@ class Tablero:
         Objeto = self.data[Inicial]
         self.data[Final] = Objeto
         self.data[Inicial] = None
-        
     
+    def reset_tablero(self):
+        default = tablero_default()
+        self.data = Columna.generate_defaults(default)
+        self.print()
+
     def print(self):
         pprint(self.data)

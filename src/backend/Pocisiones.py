@@ -1,3 +1,5 @@
+from Excepciones import Vacio
+
 
 class Casilla:
     def __init__(self, x, y):
@@ -23,11 +25,9 @@ class Casilla:
         return f"X: {self.x} Y: {self.y}"
     
 class Pocisiones:
-    def asking(self, tablero):
-        Inicial = input("Que pieza desea mover?\n")
-        self.inicial = Casilla.veryficate(Inicial, tablero)
-        Final = input("Hacia donde desea moverla?\n")
-        self.final = Casilla.veryficate(Final, tablero)
+    def flask_get(self, data, tablero):
+        self.inicial = Casilla.veryficate(data["inicial"], tablero)
+        self.final = Casilla.veryficate(data["final"], tablero)
 
     def __str__(self):
         return f"Inicial: {self.inicial} \n Final: {self.final}"
@@ -39,7 +39,7 @@ class Pocisiones:
         if name == "inicial":
             if isinstance(value, Casilla):
                 if value.pieza == None:
-                    raise Exception("Debes seleccionar una pieza")
+                    raise Vacio
         super().__setattr__(name, value)
             
 

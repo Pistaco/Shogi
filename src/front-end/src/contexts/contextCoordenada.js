@@ -1,10 +1,11 @@
 import react, { createContext, useEffect, useReducer, useState } from "react";
-import Autorizacion from "./../Autorizacion"
+import autorizacion from "../helpers/Autorizacion";
 
 export const CoordenadaContext = createContext();
 const CoordenadaProvider = (props) => {
+    const hand = props.Hand
 
-    const A_Autorizacion = Autorizacion()
+    const [Auto_state, handAuto] = useState(null)
     const [Pinicial, handInicial] = useState(null);
     const [Pfinal, handFinal] = useState(null);
     const [ColorAlarm, AlarmHand] = useState(false);
@@ -12,24 +13,21 @@ const CoordenadaProvider = (props) => {
     const Modificar = (state, propiedades) => {
         const [inicial, objeto] = propiedades;
         const [x, y] = inicial;
-        console.log(objeto)
-        console.log(x, y);
-
         state[x][y] = objeto;
         return state;
     };
 
 
     const [Tablero_matrix, hand_matrix] = useReducer(Modificar ,[
-        ["L","N","S","G","K","G", "S", "N","L"],
-        [null,"R",null,null,null,null,null,"B",null,],
-        ["P","P","P","P","P","P","P","P","P","P"],
+        ["LW","NW","SW","GW","KW","GW", "SW", "NW","LW"],
+        [null,"RW",null,null,null,null,null,"BW",null,],
+        ["PW","PW","PW","PW","PW","PW","PW","PW","PW","PW"],
         [null,null,null,null,null,null,null,null,null,],
         [null,null,null,null,null,null,null,null,null,],
         [null,null,null,null,null,null,null,null,null,],
-        ["P","P","P","P","P","P","P","P","P","P"],
-        [null,"B",null,null,null,null,null,"R",null,],
-        ["L","N","S","G","K","G", "S", "N","L"]
+        ["PB","PB","PB","PB","PB","PB","PB","PB","PB",],
+        [null,"BB",null,null,null,null,null,"RB",null,],
+        ["LB","NB","SB","GB","KB","GB", "SB", "NB","LB"]
     ]
     )
 
@@ -43,15 +41,23 @@ const CoordenadaProvider = (props) => {
 
     useEffect(() => {
         if (Pinicial !== null && Pfinal !== null) {
+            autorizacion(handAuto, Pinicial, Pfinal, hand);
+        }
+    }, [Pinicial, Pfinal])
 
-            if(A_Autorizacion) {
+    useEffect(() => {
+        if(Auto_state) {
             Mover_pieza();
-            reiniciarvalores(); 
-            }
-
+            console.log(`Inicial: ${Pinicial} Final: ${Pfinal}`)
+            reiniciarvalores();
+            handAuto(false)
         }
 
-    }, [Pinicial, Pfinal])
+        else {
+            reiniciarvalores();
+            handAuto(null);
+        }
+    }, [Auto_state])
 
     const reiniciarvalores = () => {
         handInicial(null);

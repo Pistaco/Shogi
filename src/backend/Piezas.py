@@ -1,5 +1,8 @@
+from Excepciones import Bando
+
 PIEZAS = {}
     
+
 def registrar(clase):
     PIEZAS[clase.__name__] = clase
     
@@ -22,7 +25,7 @@ class Pieza:
         condicion = self.turno.comparate(t_pieza)
         print(t_pieza, condicion)
         if not condicion:
-            raise Exception("Bando Equivocado")
+            raise Bando
     
     @classmethod
     def info(clc, pocisiones, turno):
