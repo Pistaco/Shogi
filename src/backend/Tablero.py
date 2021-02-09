@@ -2,7 +2,7 @@ from Pocisiones import Pocisiones, Casilla
 from pprint import pprint
 from default import tablero_default
 from collections import UserList
-    
+
 class Columna(UserList):
     def __init__(self, data):
         self.data = data
@@ -16,18 +16,20 @@ class Columna(UserList):
         return objeto
     
     def __getitem__(self, index):
-        if self.main == False:
-            return super().__getitem__(index) 
-           
         if isinstance(index, Casilla):
             return self.data[index.x][index.y]
 
+        return super().__getitem__(index)
     def __setitem__(self, index, value):
         if self.main == False:
             super().__setitem__(index, value)
 
         if isinstance(index, Casilla):
             self.data[index.x][index.y] = value
+        
+            
+        
+    
 
     
 class Tablero:
@@ -49,3 +51,4 @@ class Tablero:
 
     def print(self):
         pprint(self.data)
+

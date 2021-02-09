@@ -1,5 +1,4 @@
-from Excepciones import Vacio
-
+from piezas.Excepciones import Vacio
 
 class Casilla:
     def __init__(self, x, y):
@@ -28,7 +27,8 @@ class Pocisiones:
     def flask_get(self, data, tablero):
         self.inicial = Casilla.veryficate(data["inicial"], tablero)
         self.final = Casilla.veryficate(data["final"], tablero)
-
+        self.carga = (self.final.x - self.inicial.x, self.final.y - self.inicial.y)
+    
     def __str__(self):
         return f"Inicial: {self.inicial} \n Final: {self.final}"
     

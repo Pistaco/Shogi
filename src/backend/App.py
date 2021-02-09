@@ -1,7 +1,7 @@
 from json import loads, dumps
 from Game import game
 from flask import Flask, request
-from Excepciones import Error
+from piezas.Excepciones import Error
 from sys import exc_info
 
 app = Flask(__name__)
