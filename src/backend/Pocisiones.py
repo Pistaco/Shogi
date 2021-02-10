@@ -1,5 +1,5 @@
 from piezas.Excepciones import Vacio
-
+from piezas.mixin import Solicitud
 class Casilla:
     def __init__(self, x, y):
         self.x = int(x)
@@ -29,11 +29,15 @@ class Pocisiones:
         self.final = Casilla.veryficate(data["final"], tablero)
         self.carga = (self.final.x - self.inicial.x, self.final.y - self.inicial.y)
     
-    def __str__(self):
-        return f"Inicial: {self.inicial} \n Final: {self.final}"
-    
+    def validar(self, tablero):
+        if self.inicial.pieza in ["R", "B", "L"]:
+            self.solicitud = Solicitud(tablero)
+
     def getvalues(self):
         return (self.inicial, self.final)
+    
+    def __str__(self):
+        return f"Inicial: {self.inicial} \n Final: {self.final}"
     
     def __setattr__(self, name, value):
         if name == "inicial":
@@ -42,7 +46,3 @@ class Pocisiones:
                     raise Vacio
         super().__setattr__(name, value)
             
-
-    
-
-        

@@ -1,4 +1,5 @@
 from Pocisiones import Pocisiones, Casilla
+from piezas.mixin import Solicitud
 from pprint import pprint
 from default import tablero_default
 from collections import UserList
@@ -18,15 +19,23 @@ class Columna(UserList):
     def __getitem__(self, index):
         if isinstance(index, Casilla):
             return self.data[index.x][index.y]
-
+        
+        if isinstance(index, Solicitud):
+            return self.get_y(self.data, index.index)
+        
         return super().__getitem__(index)
+
     def __setitem__(self, index, value):
         if self.main == False:
             super().__setitem__(index, value)
 
         if isinstance(index, Casilla):
             self.data[index.x][index.y] = value
-        
+    
+    @staticmethod
+    def get_y(data, y):
+        for row in data:
+            yield row[y]
             
         
     

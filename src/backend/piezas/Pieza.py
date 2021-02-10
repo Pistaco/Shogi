@@ -23,9 +23,12 @@ class Pieza:
     def mover(self):
         self.movimiento()
         return self.verificador("inicial") 
-        
+    
     def movimiento(self):
         pass
+
+    def print(self):
+        print("NONE")
     
     def verificador(self, I_F):
         t_pieza = getattr(self.pocisiones, I_F).bando

@@ -1,8 +1,10 @@
 from Tablero import Tablero 
+
 from piezas.Excepciones import Error
 from piezas.Piezas import GeneralO, GeneralP, Caballo, Rey, Peon
 from piezas.Torre_Alfil import Torre, Alfil, Lanza
 from piezas.Pieza import Pieza, PIEZAS, registrar
+from piezas.mixin import mix_in
 
 
 class Game:
@@ -20,11 +22,10 @@ class Game:
     def getpieza(self):
         pieza = PIEZAS.get(self.pocisiones.inicial.pieza)
         self.pieza = pieza.info(self.pocisiones, self.turno)
-        
+        self.pieza.print()
     
     def run(self):
         self.tablero.mover()
-        self.tablero.print()
         self.turno.switch_turno()
     
     def run_debug(self):

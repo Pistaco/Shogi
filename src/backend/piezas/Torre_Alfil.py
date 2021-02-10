@@ -1,7 +1,8 @@
 from .Pieza import Pieza, PIEZAS
+from .mixin import mix_in
 from .Excepciones import Movimiento
 
-class Torre(Pieza):
+class Torre(mix_in, Pieza):
     pieza = "R"
     def movimiento(self):
         x, y = self.pocisiones.carga
@@ -10,7 +11,7 @@ class Torre(Pieza):
             return True
         raise Movimiento("Torre")
     
-class Alfil(Pieza):
+class Alfil(mix_in, Pieza):
     pieza = "B"
     def movimiento(self):
         x, y = self.pocisiones.carga
@@ -19,7 +20,7 @@ class Alfil(Pieza):
         raise Movimiento("Alfil")
         
 
-class Lanza(Pieza):
+class Lanza(mix_in, Pieza):
     pieza = "L"
     def movimiento(self):
         x, y = self.pocisiones.carga
@@ -30,12 +31,4 @@ class Lanza(Pieza):
             return True
         raise Movimiento("Lanza")
 
-class mix_in:
-    pass
-
-
-class Solicitud:
-    def __init__(self, data):
-        self.data = data
-    
-print(PIEZAS)
+        
