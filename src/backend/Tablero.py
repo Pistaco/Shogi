@@ -19,10 +19,6 @@ class Columna(UserList):
     def __getitem__(self, index):
         if isinstance(index, Casilla):
             return self.data[index.x][index.y]
-        
-        if isinstance(index, Solicitud):
-            return self.get_y(self.data, index.index)
-        
         return super().__getitem__(index)
 
     def __setitem__(self, index, value):
@@ -32,10 +28,6 @@ class Columna(UserList):
         if isinstance(index, Casilla):
             self.data[index.x][index.y] = value
     
-    @staticmethod
-    def get_y(data, y):
-        for row in data:
-            yield row[y]
             
         
     

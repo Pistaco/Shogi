@@ -12,17 +12,17 @@ class Pieza:
         super.__init_subclass__()
         registrar(clc)
 
-    def help_carga(self):
-        #Carga W = 1:
-        #Carga B = -1
-        if self.turno.turno == "W":
-            self.carga = 1
-        elif self.turno.turno == "B":
-            self.carga = -1
-
     def mover(self):
+        self.carga = self.turno.carga
+        self.estorba()
         self.movimiento()
         return self.verificador("inicial") 
+    
+    def init(self, tablero):
+        pass
+        
+    def estorba(self):
+        pass
     
     def movimiento(self):
         pass
@@ -42,7 +42,6 @@ class Pieza:
         objeto = clc()
         objeto.pocisiones = pocisiones
         objeto.turno = turno
-        objeto.help_carga()
         return objeto
 
 

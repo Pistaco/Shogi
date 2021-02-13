@@ -28,11 +28,9 @@ class Pocisiones:
         self.inicial = Casilla.veryficate(data["inicial"], tablero)
         self.final = Casilla.veryficate(data["final"], tablero)
         self.carga = (self.final.x - self.inicial.x, self.final.y - self.inicial.y)
+        self.xx = (self.inicial.x, self.final.x)
+        self.yy = (self.inicial.y, self.final.y)
     
-    def validar(self, tablero):
-        if self.inicial.pieza in ["R", "B", "L"]:
-            self.solicitud = Solicitud(tablero)
-
     def getvalues(self):
         return (self.inicial, self.final)
     

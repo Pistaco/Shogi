@@ -27,3 +27,7 @@ class Movimiento(Error):
     """Debes seleccionar una pieza"""
     def __init__(self, B=None):
         super().__init__("MOVIMIENTO", B)
+
+class Estorba(Error):
+    def __init__(self, B=None):
+        super().__init__("ESTORBA", B)
