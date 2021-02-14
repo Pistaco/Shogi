@@ -1,4 +1,4 @@
-from Tablero import Tablero 
+from tablero.Tablero import Tablero 
 
 from piezas.Excepciones import Error
 from piezas.Piezas import GeneralO, GeneralP, Caballo, Rey, Peon
@@ -67,6 +67,4 @@ class Turno:
             return True
         return False
 
-
 game = Game()
-game.run_debug()

@@ -19,7 +19,7 @@ class Pieza:
         return self.verificador("inicial") 
     
     def init(self, tablero):
-        pass
+        print("MIX NOT")
         
     def estorba(self):
         pass

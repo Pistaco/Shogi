@@ -1,8 +1,10 @@
-from Pocisiones import Pocisiones, Casilla
+from .Pocisiones import Pocisiones, Casilla
+from .default import tablero_default
+
 from piezas.mixin import Solicitud
-from pprint import pprint
-from default import tablero_default
+
 from collections import UserList
+from pprint import pprint
 
 class Columna(UserList):
     def __init__(self, data):

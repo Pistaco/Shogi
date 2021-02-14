@@ -16,8 +16,8 @@ def verificacion():
         game.recolectar_datos(data_react)
     except Error:
         print("FALLIDO")
-        type, value, traceback = exc_info()
-        print(f"{type}\n{value}\n{traceback}")
+        value = exc_info()[1]
+        print(value)
         valu[0] = value
         return "False"
     else:
@@ -29,7 +29,12 @@ def verificacion():
         
 @app.route("/Flask/Error")
 def get_error():
-    value = str(valu[0])
+    value = valu[0]
+    value = dumps({
+        "ERROR": value.A,
+        "DETALLES": value.B
+        })
+
     return value
 
 @app.route("/Flask/Reiniciar")

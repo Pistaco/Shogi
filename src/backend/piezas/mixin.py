@@ -3,7 +3,7 @@ from .Excepciones import Estorba
 
 class PseudoList(UserList):
     def __init__(self, ai):
-        self.data = ai.pocisiones.solicitud.data
+        self.data = ai.solicitud.data
         self.carga = ai.turno.carga
         self.pocisiones = ai.pocisiones
         
@@ -29,26 +29,46 @@ class Solicitud:
             self.get_y()
         elif x == "yy":
             self.get_x()
-        elif x == "z":
-            return None
 
     def get_y(self):
         self.data = [row[self.index] for row in self.tablero]
     
     def get_x(self):
         self.data = self.tablero[self.index]
+    
+    def get_z(self, sentido, inicial, final):
+        x_plus, y_plus = sentido
+        xi, yi = inicial
+        xf, yf = final
+
+        data = []
+
+        def suma():
+            nonlocal xi, yi
+            xi += x_plus
+            yi += y_plus
+            
+        suma()
+        while (xi != xf and yi != yf):
+            data.append(self.tablero[xi][yi])
+            suma()
+        else:
+            data.append(self.tablero[xi][yi])
+
+        self.data = data
 
 
 class mix_in:
     def run(self, sentido, error):
-        values = PseudoList(self)
-        values.slice(sentido)
-        values.iter_bucle(error)
+        self.psudolist = PseudoList(self)
+        self.psudolist.slice(sentido)
+        self.psudolist.iter_bucle(error)
     
     def init(self, tablero):
-        self.psudolist = PseudoList(self)
         self.solicitud = Solicitud(tablero)
     
-    @classmethod
-    def tablero_get(clc, data):
-        pass
+    def run_b(self):
+        self.psudolist = PseudoList(self)
+        self.psudolist.iter = self.solicitud.data
+        print(self.psudolist.iter)
+        self.psudolist.iter_bucle("ALFIL")

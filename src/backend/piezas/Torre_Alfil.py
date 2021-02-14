@@ -11,7 +11,6 @@ class Torre(mix_in, Pieza):
         raise Movimiento("Torre")
 
     def estorba(self):
-        self.solicitud = getattr(self, "pocisiones").solicitud
         value, index = self.help_sentido()
         self.solicitud.get_Info(index, value)
         self.run(value, "TORRE")
@@ -39,9 +38,32 @@ class Alfil(mix_in, Pieza):
         raise Movimiento("Alfil")
 
     def estorba(self):
-        pass
-        
+        self.help_sentido()
+        self.inicio_final()
+        Inicio, Final = self.pocisiones.getvalues()
+        self.solicitud.get_z(self.sentido, (Inicio.x, Inicio.y), (Final.x, Final.y))
+        self.run_b()
 
+    def help_sentido(self):
+        # DIAGONAL ABAJO ARRIBA: [-1, +1]
+        # DIAGONAL ARRIBA ABAJO: [+1, +1]
+        x_carga, y_carga = self.pocisiones.carga
+        if x_carga == y_carga:
+            sentido = 1, 1
+        else:
+            sentido = -1, 1
+        self.sentido = sentido
+    
+    def inicio_final(self):
+        y1, y2 = self.pocisiones.yy
+        if y1 < y2:
+            s = 1
+        else:
+            s = -1
+        a, b = self.sentido
+        self.sentido = a*s, b*s
+            
+        
 class Lanza(mix_in, Pieza):
     pieza = "L"
     def movimiento(self):
@@ -52,5 +74,10 @@ class Lanza(mix_in, Pieza):
             print("AAA")
             return True
         raise Movimiento("Lanza")
+
+    def estorba(self):
+        value = self.pocisiones.inicial.y
+        self.solicitud.get_Info(value,"xx")
+        self.run("xx", "LANZA")
 
         

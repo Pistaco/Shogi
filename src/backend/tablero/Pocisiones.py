@@ -1,5 +1,6 @@
 from piezas.Excepciones import Vacio
 from piezas.mixin import Solicitud
+
 class Casilla:
     def __init__(self, x, y):
         self.x = int(x)
@@ -43,4 +44,5 @@ class Pocisiones:
                 if value.pieza == None:
                     raise Vacio
         super().__setattr__(name, value)
+            
             
