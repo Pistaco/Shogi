@@ -1,4 +1,4 @@
-from .Excepciones import Vacio, Bando, Movimiento
+from .Excepciones import Bando
 
 PIEZAS = {}
 def registrar(clase):
@@ -14,15 +14,25 @@ class Pieza:
 
     def mover(self):
         self.carga = self.turno.carga
+        self.verificador()
+        self.movimiento()
         self.condition()
         self.estorba()
-        self.movimiento()
+        
+    def init(self, none):
+        pass
         
     def estorba(self):
         pass
     
     def movimiento(self):
         pass
+
+    def verificador(self):
+        bando = self.pocisiones.inicial.bando
+        condition = self.turno.comparate(bando)
+        if not condition:
+            raise Bando
 
     @classmethod
     def info(clc, ai):

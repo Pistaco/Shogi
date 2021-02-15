@@ -5,9 +5,9 @@ class Peon(Pieza):
     pieza = "P"
     def movimiento(self):
         result = self.pocisiones.carga[0]
-        if result != self.carga:
+        y1, y2 = self.pocisiones.yy
+        if not (y1 == y2 and result == self.carga):
             raise Movimiento("Peon")
-    
 
 class Caballo(Pieza):
     pieza = "N"
