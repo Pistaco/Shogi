@@ -14,12 +14,9 @@ class Pieza:
 
     def mover(self):
         self.carga = self.turno.carga
+        self.condition()
         self.estorba()
         self.movimiento()
-        return self.verificador("inicial") 
-    
-    def init(self, tablero):
-        print("MIX NOT")
         
     def estorba(self):
         pass
@@ -27,21 +24,12 @@ class Pieza:
     def movimiento(self):
         pass
 
-    def print(self):
-        print("NONE")
-    
-    def verificador(self, I_F):
-        t_pieza = getattr(self.pocisiones, I_F).bando
-        condicion = self.turno.comparate(t_pieza)
-        print(t_pieza, condicion)
-        if not condicion:
-            raise Vacio()
-
     @classmethod
-    def info(clc, pocisiones, turno):
+    def info(clc, ai):
         objeto = clc()
-        objeto.pocisiones = pocisiones
-        objeto.turno = turno
+        objeto.pocisiones = ai.pocisiones
+        objeto.turno = ai.turno
+        objeto.condition = ai.capturar.condition
         return objeto
 
 

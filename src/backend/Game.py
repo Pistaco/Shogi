@@ -6,12 +6,15 @@ from piezas.Torre_Alfil import Torre, Alfil, Lanza
 from piezas.Pieza import Pieza, PIEZAS, registrar
 from piezas.mixin import mix_in, Solicitud
 
+from mecanismos.Capturar import Capturar
+from mecanismos.Turno import Turno
 
 class Game:
     def __init__(self):
         self.tablero = Tablero()
         self.pocisiones = self.tablero.Pocisiones
         self.turno = Turno()
+        self.capturar = Capturar(self)
     
     def recolectar_datos(self, flask):
         self.pocisiones.flask_get(flask, self.tablero.data)
@@ -21,16 +24,12 @@ class Game:
         
     def getpieza(self):
         pieza = PIEZAS.get(self.pocisiones.inicial.pieza)
-        self.pieza = pieza.info(self.pocisiones, self.turno)
-        self.sub_proces()
+        self.pieza = pieza.info(self)
+        self.pieza.init(self.tablero.data)
     
     def run(self):
         self.tablero.mover()
         self.turno.switch_turno()
-    
-    def sub_proces(self):
-        self.pieza.init(self.tablero.data)
-        self.pieza.print()
 
     def run_debug(self):
         self.tablero.print()
@@ -45,26 +44,6 @@ class Game:
             self.tablero.print()
 
 
-class Turno:
-    def __init__(self):
-        self.turno = "B"
-        self.carga = -1
-    
-    def switch_turno(self):
-        if self.turno == "B":
-            self.turno = "W"
-            self.carga = 1
-
-        elif self.turno == "W":
-            self.turno = "B"
-            self.carga = -1
-        
-    def comparate(self, turno):
-        if turno == None:
-            return True
-
-        if self.turno == turno:
-            return True
-        return False
 
 game = Game()
+game.run_debug()

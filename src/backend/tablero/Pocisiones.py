@@ -28,6 +28,7 @@ class Pocisiones:
     def flask_get(self, data, tablero):
         self.inicial = Casilla.veryficate(data["inicial"], tablero)
         self.final = Casilla.veryficate(data["final"], tablero)
+        self.vacio_verificador()
         self.carga = (self.final.x - self.inicial.x, self.final.y - self.inicial.y)
         self.xx = (self.inicial.x, self.final.x)
         self.yy = (self.inicial.y, self.final.y)
@@ -35,14 +36,13 @@ class Pocisiones:
     def getvalues(self):
         return (self.inicial, self.final)
     
+    def vacio_verificador(self):
+        if self.inicial.bando:
+            return True
+        raise Vacio
+    
     def __str__(self):
         return f"Inicial: {self.inicial} \n Final: {self.final}"
     
-    def __setattr__(self, name, value):
-        if name == "inicial":
-            if isinstance(value, Casilla):
-                if value.pieza == None:
-                    raise Vacio
-        super().__setattr__(name, value)
             
             

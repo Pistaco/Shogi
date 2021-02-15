@@ -1,5 +1,5 @@
 
-def _tablero_default():
+def tablero_default():
     return ([
         ["LW","NW","SW","GW","KW","GW", "SW", "NW","LW"],
         [None,"RW",None,None,None,None,None,"BW",None,],
@@ -14,14 +14,14 @@ def _tablero_default():
     )
 
 
-def tablero_default():
+def _tablero_default():
     return ([
         ["LW","NW","SW","GW","KW","GW", "SW", "NW","LW"],
         [None,"RW",None,None,None,None,None,"BW",None,],
         [None,None,None,None,None,None,None,None,None,],
         [None,None,None,None,None,None,None,None,None,],
-        [None,"BB",None,None,None,None,None,"BW",None,],
-        [None,None,None,None,None,None,None,None,None,],
+        [None,"BB",None,"RB",None,None,None,None,None,],
+        [None,None,None,None,None,"RW",None,"BW",None,],
         [None,None,None,None,None,None,None,None,None,],
         [None,None,None,None,None,None,None,None,None,],
         ["LB","NB","SB","GB","KB","GB", "SB", "NB","LB"]

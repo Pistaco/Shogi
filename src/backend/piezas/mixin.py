@@ -9,13 +9,16 @@ class PseudoList(UserList):
         
     def slice(self, zz):
         z1, z2 = getattr(self.pocisiones, zz)
-        self.iter = self.data[z1 + self.carga: z2 + self.carga: self.carga]
+        self.iter = self.data[z1 + self.carga: z2: self.carga]
+        print(self.iter)
     
     def iter_bucle(self, error):
+        print("TIRALO")
+        print(self.iter)
         for x in self.iter:
             if x:
                 raise Estorba(error)
-            return True
+        return True
 
 
 class Solicitud:
@@ -52,8 +55,6 @@ class Solicitud:
         while (xi != xf and yi != yf):
             data.append(self.tablero[xi][yi])
             suma()
-        else:
-            data.append(self.tablero[xi][yi])
 
         self.data = data
 
