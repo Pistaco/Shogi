@@ -34,9 +34,8 @@ const useAlert = () => {
                     <h1>
                         Movimiento Equivocado
                     </h1>
-                    <p>
-                        {mensaje}
-                    </p>
+                    <p>{mensaje.ERROR}</p>
+                    <p>{mensaje.DETALLES}</p>
                     <button onClick={() => Handisplay(false)}>
                         Okey
                     </button>

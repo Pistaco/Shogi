@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Casilla from "./casilla"
 import CoordenadaProvider from "./../contexts/contextCoordenada";
 import UseAlert from "./Alert";
-import Reset from "./../reset_button";
+import Reset from "./reset_button";
 import { Fragment } from "react";
 
 
