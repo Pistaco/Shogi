@@ -3,7 +3,6 @@ import Casilla from "./casilla"
 import CoordenadaProvider from "./../contexts/contextCoordenada";
 import UseAlert from "./Alert";
 import Reset from "./reset_button";
-import { Fragment } from "react";
 
 
 const TableroS = styled.div`
@@ -41,12 +40,6 @@ const Tablero = () => {
         </>
     )
 
-}
-
-const ListaColumna = (props) => {
-    return (
-        props.children
-    )
 }
 
 
