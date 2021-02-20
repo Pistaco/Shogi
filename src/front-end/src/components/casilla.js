@@ -1,7 +1,12 @@
-import react, {useContext, useEffect, useState} from "react";
-import {CoordenadaContext} from "./../contexts/contextCoordenada";
+import react, {useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
-import Mover_pieza from "./../helpers/moverpieza";
+import state_export from "../redux/redux";
+import { epicAction } from "../redux/reactive";
+import { Color } from "../redux/actions";
+
+const test = () => ({
+    type: "test"
+})
 
 const Pieza = styled.div`
 display: flex;
@@ -16,65 +21,36 @@ height: 6.5em;
 border: 1px solid black;
 `;
 
+const state = state_export()
 
-const Casilla = ({row, column}) => {
+const CasillaUI = ({pieza, colorS, onClick}) => {
 
-    const {Tablero_matrix, handInicial, handFinal, ColorAlarm, AlarmHand } = useContext(CoordenadaContext);
-    const [coordenada, _] = useState([row, column])
-    const [pieza, HandPieza] = useState(null);
-    const [color, HandColor] = useState(false);
-
-
-    useEffect(() => {
-        help_pieza();
-        if(ColorAlarm === false) {
-            HandColor(false);
-        }
-    })
-
-    const help_pieza = () => {
-        const [x, y] = coordenada;
-        const tpieza = Tablero_matrix[x][y]
-        HandPieza(tpieza);
-    }
-    
-    const HandClick = () => {
-
-        if (ColorAlarm === true) {
-            ListenSecundElement();
-            return;
-        }
-
-        if(color === false) {
-            HandColor(true)
-            ListenFirstElement();
-        }
-    };
-
-    const ListenFirstElement = () => {
-        console.log("PRIMERO");
-        AlarmHand(true);
-        handInicial(coordenada);
-    };
-
-    const ListenSecundElement = () => {
-        console.log("SEGUNDO");
-        handFinal(coordenada);
-    }
-
-
-    const style = {backgroundColor: color ? "#EFE46B" : "#DCC27F"}
+    const color = useMemo(() => ({
+        backgroundColor: colorS ? "#EFE46B" : "#DCC27F"
+    }), [colorS])
 
 
     return (
-        <CasillaS onClick={HandClick} style={style} >
+        <CasillaS style={color} onClick={onClick}>
             <Pieza>
-               {pieza}
+                {pieza}
             </Pieza>
         </CasillaS>
     )
+}
+const CasillaCont = ({row, column}) => {
+    const [pieza, HandPieza] = useState(null);
+    const [color, HandColor] = useState(false);
+    const colorChange = () => color ? HandColor(false): HandColor(true)
+    const logic = () => {
+        colorChange()
+        state.dispatch(test())
+    }
 
+    return <CasillaUI  pieza={pieza} colorS={color} onClick={logic}/>
 }
 
+    
 
-export default Casilla;
+
+export default CasillaCont;

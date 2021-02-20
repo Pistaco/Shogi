@@ -24,7 +24,7 @@ const inicialState = {
     },
     "color_casillas": {
         "cantidad": 0,
-        "permitir": False
+        "permitir": false
     },
 
     "Autorizacion": {

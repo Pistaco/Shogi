@@ -2,7 +2,7 @@ import {T_A, C_A, A_A, P_A} from "./type_actions"
 import state from "./redux"
 
 
-const Mover = () => {
+export const Mover = () => {
     const {piezas} = state.getState()
     return {
         type: T_A.MOVER,
@@ -10,7 +10,7 @@ const Mover = () => {
     }
 }
 
-const Color = parametro => {
+export const Color = parametro => {
     switch (parametro) {
         case "add":
             return {type: C_A.COLOR_ADD}
@@ -21,7 +21,7 @@ const Color = parametro => {
     }
 }
 
-const Piezas = (coordenada, pieza, opcion="inicial") => ({
+export const Piezas = (coordenada, pieza, opcion="inicial") => ({
     type: opcion === "inicial" ?  P_A.INICIAL : P_A.FINAL,
     data: {
         coordenada: coordenada,
@@ -31,17 +31,16 @@ const Piezas = (coordenada, pieza, opcion="inicial") => ({
 
 
 
-const Auto = data => {
-    const bool = data === "True" ? true : false
-    return {
-        type: A_A.REQUEST, 
-        data: {
-            request: data
+export const Auto = data => ({
+    type: A_A.REQUEST, 
+    data: {
+        request: data === "True" ? true : false
         }
-    }
-}
+    })
+    
 
-const Error = (info, detalles) => ({
+
+export const Error = (info, detalles) => ({
     type: A_A.GET_ERROR,
     data: {
         info: info,
@@ -49,7 +48,7 @@ const Error = (info, detalles) => ({
     }
 })
 
-const Display = () => ({
+export const Display = () => ({
     type: A_A.TURN_DISPLAY
 })
     

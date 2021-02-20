@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Casilla from "./casilla"
-import CoordenadaProvider from "./../contexts/contextCoordenada";
 import UseAlert from "./Alert";
 import Reset from "./reset_button";
 
@@ -25,17 +24,15 @@ const Tablero = () => {
             <Reset/>
             {display ? <Alert/> : null}
             <TableroS>
-                <CoordenadaProvider Hand={[Handisplay, handMens]}>
-                    <Columna column={0}></Columna>
-                    <Columna column={1}></Columna>
-                    <Columna column={2}></Columna>
-                    <Columna column={3}></Columna>
-                    <Columna column={4}></Columna>
-                    <Columna column={5}></Columna>
-                    <Columna column={6}></Columna>
-                    <Columna column={7}></Columna>
-                    <Columna column={8}></Columna>
-                </CoordenadaProvider>
+                <Columna column={0}></Columna>
+                <Columna column={1}></Columna>
+                <Columna column={2}></Columna>
+                <Columna column={3}></Columna>
+                <Columna column={4}></Columna>
+                <Columna column={5}></Columna>
+                <Columna column={6}></Columna>
+                <Columna column={7}></Columna>
+                <Columna column={8}></Columna>
             </TableroS>
         </>
     )

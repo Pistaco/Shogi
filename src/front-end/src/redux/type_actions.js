@@ -1,22 +1,22 @@
 
 export const T_A = {
-    MOVER,
+    MOVER: "mover",
 }
 
 export const C_A = {
-    COLOR_ADD,
-    RESET,
-    SWITCH,
+    COLOR_ADD: "add2",
+    RESET: "reset",
+    SWITCH: "swicth",
 }
 
 export const A_A = {
-    REQUEST,
-    GET_ERROR,
-    TURN_DISPLAY,
+    REQUEST: "r",
+    GET_ERROR: "e",
+    TURN_DISPLAY: "turn",
 }
 
 export const P_A = {
-    INICIAL,
-    FINAL,
-    BOTH,
+    INICIAL: "ini",
+    FINAL: "fin",
+    BOTH: "bo",
 }
