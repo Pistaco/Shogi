@@ -1,9 +1,7 @@
 import {T_A, C_A, A_A, P_A} from "./type_actions"
-import state from "./redux"
 
-
-export const Mover = () => {
-    const {piezas} = state.getState()
+export const Mover = state => {
+    const { piezas } = state.getState()
     return {
         type: T_A.MOVER,
         data: {...piezas}
@@ -18,12 +16,14 @@ export const Color = parametro => {
             return {type: C_A.RESET}
         case "switch":
             return {type: C_A.SWITCH}
+        default:
+            return {type: null}
     }
 }
 
-export const Piezas = (coordenada, pieza, opcion="inicial") => ({
+export const Piezas = (coordenada, opcion="inicial", pieza=null) => ({
     type: opcion === "inicial" ?  P_A.INICIAL : P_A.FINAL,
-    data: {
+    data:  {
         coordenada: coordenada,
         pieza: pieza
     }

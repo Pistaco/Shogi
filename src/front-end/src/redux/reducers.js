@@ -20,12 +20,13 @@ function tableroReducer(state = inicialState.tablero, action) {
 function colorReducer(state = inicialState.color_casillas, action) {
     switch (action.type) {
         case C_A.COLOR_ADD:
-            console.log("COLOR2")
             let {cantidad} = state
+            console.log("REDUCER: ADD")
             console.log(cantidad)
             return {...state, cantidad: cantidad + 1}
 
         case C_A.RESET:
+            console.log("REDUCER: RESET")
             return {...state, cantidad: 0}
 
         case C_A.SWITCH:
@@ -56,9 +57,11 @@ function AutorizacionReducer(state = inicialState.Autorizacion, action) {
 function PiezasReducer(state = inicialState.piezas, {data, type}) {
     switch (type) {
         case P_A.INICIAL:
-            return {...state, inicial: data.piezas.inicial}
+            console.log("UWUWUUWUWUW")
+            console.log(data)
+            return {...state, inicial: data}
         case P_A.FINAL:
-            return {...state, final: data.piezas.final}
+            return {...state, final: data}
         case P_A.BOTH:
             return {...data.piezas}
         default:

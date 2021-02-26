@@ -1,5 +1,5 @@
 import { of } from "rxjs";
-import {map, tap, mergeMap, mapTo} from "rxjs/operators";
+import {map, tap, mergeMap, mapTo, concatMap} from "rxjs/operators";
 import { combineEpics, ofType } from "redux-observable";
 
 import { Color, Piezas } from "../actions";
@@ -21,40 +21,30 @@ const pseudoList = {
     log: () => console.log("DESDE PSEUDO:   " + pseudoList.data) 
 }
 
-const conditional = ($store, $action) => {
-    if ($store.value.color.cantidad === 2) {
-        return {type: color.RESET}
-    }
-    return $action
+export const START_COLOR = (state) => {
+    state.dispatch({
+        type: "ADD"
+    })
+    state.dispatch({
+        type: "CHECK"
+    })
 }
-
-const ColorEpic = ($action, $store) => (
-    $action.pipe(
-        ofType(color.START),
-        tap(v => console.log("START")),
-        mergeMap(data => of(
-            {type: color.ADD},
-            {type: color.CHECK}
-        )),
-    )
-)
 
 const ColorADDEpic = ($action, $store) => (
     $action.pipe(
         ofType(color.ADD),
         tap(v => console.log("ADD EPIC")),
         tap(v => pseudoList.push($Casilla)),
-        mapTo(Color("add"))
+        map(v => Color("add"))
     )
 )
 
 const CheckResetEpic = ($action, $store) => (
     $action.pipe(
-        ofType("CHECK"),
-        tap(v => console.log("CHECK EPIC")),
-        map(action => action)
-    )
-)
+        ofType(color.CHECK),
+        tap(() => console.log($store.value.color.cantidad)),
+        map(v =>  $store.value.color.cantidad == 2 ? {type: color.RESET} : {type: "NULL"})
+))
 
 
 
@@ -72,5 +62,5 @@ const ResetEpic = ($action, $store) => (
     )
 )
 
-const MainColorEpic = combineEpics(ColorEpic, ResetEpic, ColorADDEpic, CheckResetEpic)
+const MainColorEpic = combineEpics(CheckResetEpic, ResetEpic, ColorADDEpic)
 export default MainColorEpic
