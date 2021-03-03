@@ -9,8 +9,10 @@ function tableroReducer(state = inicialState.tablero, action) {
             const [x, y] = inicial.coordenada;
             const [x2, y2] = final.coordenada;
             const result = [...state];
-            result.tablero[x][y] = null;
-            result.tablero[x2, y2] = inicial.pieza
+            console.log("REDUCER TABLERO")
+            console.log(result)
+            result[x][y] = null;
+            result[x2][y2] = inicial.pieza
             return result
         default:
             return state

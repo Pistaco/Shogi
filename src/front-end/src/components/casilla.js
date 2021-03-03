@@ -3,9 +3,9 @@ import { debounce, debounceTime, delay, map, tap } from "rxjs/operators";
 import styled from "styled-components";
  
 import { Color } from "../redux/actions";
-import state_export from "../redux/index";
+import { state} from "./tablero";
 
-import $Casilla, { $Color } from "../redux/streams/subjectColor";
+import $Casilla, { $Color } from "../streams";
 import { START_COLOR } from "./../redux/epics/colorEpic";
 
 // ESTILOS 
@@ -25,7 +25,6 @@ border: 1px solid black;
 `;
 
 // STATE
-const state = state_export()
 
 // HOOKS
 
@@ -69,12 +68,23 @@ const CasillaCont = ({row, column}) => {
         START_COLOR(state)
     }
 
+    const actulizarPiezas = () => {
+            console.log("INICIO ACTULIZAR")
+            const {tablero} = state.getState()
+            HandPieza(tablero[row][column])
+    }
+
     useEffect(() => {
-        $Color.subscribe(() => 
+        $Color.subscribe(() => {
+            actulizarPiezas()
             HandColor(false)
-        )
+        })
         return () => Color.unsubscribe()
     }, [])
+
+    useEffect(() => {
+
+    })
 
 
     return <CasillaUI  pieza={pieza} colorS={color} onClick={logic}/>

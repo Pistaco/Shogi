@@ -1,8 +1,14 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react/cjs/react.development";
+import {debounceTime, delay, tap} from "rxjs/operators";
+
+
 import Casilla from "./casilla"
 import UseAlert from "./Alert";
 import Reset from "./reset_button";
 
+import state_managent from "./../redux/index";
+import { $Mover } from "../streams";
 
 const TableroS = styled.div`
 display: flex;
@@ -14,11 +20,22 @@ display: flex;
 flex-direction: column;
 `
 
-
+export const state = state_managent()
 
 const Tablero = () => {
     const [Alert, display1, handMens] = UseAlert()
     const [display, Handisplay] = display1
+
+    useEffect(() => {
+        $Mover.pipe(
+            debounceTime(0)
+        ).subscribe(
+            next => state.dispatch({type: "MOVER"})
+        )
+        
+        return () => $Mover.unsubscribe()
+    }, [])
+
     return(
         <>
             <Reset/>
@@ -56,6 +73,5 @@ const Columna = ({column}) => {
 
     )
 }
-
 
 export default Tablero;

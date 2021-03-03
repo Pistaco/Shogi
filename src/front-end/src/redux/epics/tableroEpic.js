@@ -1,5 +1,5 @@
 import { ofType } from "redux-observable"
-import { map, mergeMap, pluck, tap } from "rxjs/operators"
+import { map, tap} from "rxjs/operators"
 
 const tablero = {
     MOVER: "MOVER"
@@ -9,17 +9,14 @@ const tablero = {
 const TableroEpic = ($action, $state) => (
     $action.pipe(
         ofType("MOVER"),
-        mergeMap(() =>
-            $state.pipe(
-                pluck("value", "piezas"),
-                tap(console.log),
-                map(value => ({
-                    type: "mover",
-                    data: value 
-                }))
-            )
-        )
+        map(value => ({
+            type: "mover",
+            data: {
+                piezas: $state.value.piezas
+            }
+        })
     )
+)
 )
 
 
