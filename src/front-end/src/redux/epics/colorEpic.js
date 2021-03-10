@@ -4,7 +4,7 @@ import { combineEpics, ofType } from "redux-observable";
 
 import { Color, Piezas } from "../actions";
 
-import $Casilla, {$Color, $Mover} from "../../streams";
+import $Send from "../../streams";
 
 export const color  = {
     "START": "START",
@@ -29,6 +29,14 @@ export const START_COLOR = (state) => {
         type: "CHECK"
     })
 }
+
+const Next = value => $Send.next(
+    {
+        type: "actualizar",
+        data: value
+    }
+)
+
 
 const ColorADDEpic = ($action, $store) => (
     $action.pipe(
@@ -55,7 +63,6 @@ const ResetEpic = ($action, $store) => (
             Piezas(pseudoList.data[0], "inicial", "X"),
             Piezas(pseudoList.data[1], "final", "Y"),
             ) ),
-        tap(v => $Mover.next(1)),
         tap(v => pseudoList.reset()),
     )
 )

@@ -1,5 +1,5 @@
 import { ofType } from "redux-observable"
-import { map, tap} from "rxjs/operators"
+import { map } from "rxjs/operators"
 
 const tablero = {
     MOVER: "MOVER"

@@ -1,10 +1,16 @@
 import { BehaviorSubject, Subject } from "rxjs";
+import { filter, map, share, tap } from "rxjs/operators";
+
+const $Send = Subject()
+const $Epic = Subject()
+
+const $Mover = Subject()
+ 
+
+const generate_receptor = state => $Mover.asObservable().pipe(
+    map(value => state.dispatch({type: "MOVER"}))
+)
 
 
-const $Color = new BehaviorSubject(0)
-const $Casilla = new BehaviorSubject(0) 
-const $Mover = new Subject()
-
-
-export { $Color, $Mover}
-export default $Casilla 
+export { $Receptor_pieza, generate_receptor, $Epic}
+export default $Send
