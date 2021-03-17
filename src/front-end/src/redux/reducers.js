@@ -11,9 +11,16 @@ function tableroReducer(state = inicialState.tablero, action) {
             const result = [...state];
             console.log("REDUCER TABLERO")
             console.log(result)
-            result[x][y] = null;
-            result[x2][y2] = inicial.pieza
+            result[x][y].pieza = null;
+            result[x2][y2].pieza = inicial.pieza
             return result
+
+        case T_A.SELECCION:
+            const [x3, y3] = action.data.coordenada
+            const result2 = [...state]
+            result2[x3][y3].seleccionar = true
+            return result2
+
         default:
             return state
         }
@@ -32,7 +39,7 @@ function colorReducer(state = inicialState.color_casillas, action) {
             return {...state, cantidad: 0}
 
         case C_A.SWITCH:
-            const valor = state.permitir ? false : true
+            const valor = !state.permitir
             return {...state, permitir: valor}
         default:
             console.log("COLOR")
@@ -49,7 +56,7 @@ function AutorizacionReducer(state = inicialState.Autorizacion, action) {
             return {...state, Error: data.Error}
         case A_A.TURN_DISPLAY:
             const result1 = {...state}
-            result1.Error.display = data.Error.display ? false : true
+            result1.Error.display = !data.Error.display
             return result1
         default:
             return state

@@ -27,15 +27,15 @@ const Tablero = () => {
             <Reset/>
             {display ? <Alert/> : null}
             <TableroS>
-                <Columna column={0}></Columna>
-                <Columna column={1}></Columna>
-                <Columna column={2}></Columna>
-                <Columna column={3}></Columna>
-                <Columna column={4}></Columna>
-                <Columna column={5}></Columna>
-                <Columna column={6}></Columna>
-                <Columna column={7}></Columna>
-                <Columna column={8}></Columna>
+                <Columna column={0}/>
+                <Columna column={1}/>
+                <Columna column={2}/>
+                <Columna column={3}/>
+                <Columna column={4}/>
+                <Columna column={5}/>
+                <Columna column={6}/>
+                <Columna column={7}/>
+                <Columna column={8}/>
             </TableroS>
         </>
     )
@@ -46,15 +46,15 @@ const Tablero = () => {
 const Columna = ({column}) => {
     return ( 
         <ColumnaS>
-            <Casilla column={column} row={0}></Casilla>
-            <Casilla column={column} row={1}></Casilla>
-            <Casilla column={column} row={2}></Casilla>
-            <Casilla column={column} row={3}></Casilla>
-            <Casilla column={column} row={4}></Casilla>
-            <Casilla column={column} row={5}></Casilla>
-            <Casilla column={column} row={6}></Casilla>
-            <Casilla column={column} row={7}></Casilla>
-            <Casilla column={column} row={8}></Casilla>
+            <Casilla column={column} row={0}/>
+            <Casilla column={column} row={1}/>
+            <Casilla column={column} row={2}/>
+            <Casilla column={column} row={3}/>
+            <Casilla column={column} row={4}/>
+            <Casilla column={column} row={5}/>
+            <Casilla column={column} row={6}/>
+            <Casilla column={column} row={7}/>
+            <Casilla column={column} row={8}/>
         </ColumnaS>
 
     )
