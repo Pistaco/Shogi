@@ -33,7 +33,7 @@ const casillaObs = () => (new Subject())
                 concat(
                     of(value).pipe(
                         ofType(OFF_COLOR),
-                        map(value => ({...value, color: false}))
+                        tap(value => console.log("COLOR APAGADO"))
                     ),
                     of(value).pipe(
                         ofType(ACTUALIZAR_PIEZA),
@@ -53,24 +53,4 @@ const casillaObs = () => (new Subject())
         )
     )
 
-const prototypeData = (type, pieza, x, y) => ({
-    type,
-    data: {
-        coordenada: [x, y],
-        pieza,
-        color: true
-    }
-})
-
-
-const $TEST = casillaObs()
-$TEST.subscribe(console.log)
-$TEST.next(
-    {
-        type: ACTUALIZAR_PIEZA,
-        data: {
-            coordenada: [2, 0],
-            color: true,
-        }
-    }
-)
+export default casillaObs
