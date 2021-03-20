@@ -14,8 +14,8 @@ const ACTUALIZAR_PIEZA = "ACTPIEZA"
 //
 
 // Actions
-const offColor = value => ({
-    type: "OFFCOLOR",
+export const offColor = value => ({
+    type: OFFCOLOR,
     data: {
         coordenada: value
     }
@@ -63,3 +63,5 @@ export default {
     dispatch: next => OBScasilla.next(next),
     listen: (casilla, coordenadas) => casillaObs(casilla,coordenadas).subscribe()
 }
+
+//

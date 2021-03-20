@@ -8,6 +8,13 @@ export const Mover = state => {
     }
 }
 
+export const Seleccion = coordenada => ({
+    type: T_A.SELECCION,
+    data: {
+        coordenada,
+    }
+})
+
 export const Color = parametro => {
     switch (parametro) {
         case "add":
@@ -34,7 +41,7 @@ export const Piezas = (coordenada, opcion="inicial", pieza=null) => ({
 export const Auto = data => ({
     type: A_A.REQUEST, 
     data: {
-        request: data === "True" ? true : false
+        request: data === "True"
         }
     })
     

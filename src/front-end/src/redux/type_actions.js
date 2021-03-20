@@ -1,6 +1,7 @@
 
 export const T_A = {
     MOVER: "mover",
+    SELECCION: "SELECCION"
 }
 
 export const C_A = {

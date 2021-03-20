@@ -1,12 +1,6 @@
 
 // TYPE ACTIONS
 
-const color  = {
-    "START": "START",
-    "ADD": "ADD",
-    "CHECK": "CHECK",
-    "RESET": "RESET"
-}
 
 const tablero = {
     MOVER: "MOVER"
@@ -21,3 +15,7 @@ export const START_COLOR = (state) => {
         type: "CHECK"
     })
 }
+
+export const sendOFF = () => ({
+    type: "SEND_OFF"
+})

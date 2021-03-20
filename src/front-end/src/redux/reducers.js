@@ -6,8 +6,8 @@ function tableroReducer(state = inicialState.tablero, action) {
     switch (action.type) {
         case T_A.MOVER:
             const {inicial, final} = action.data.piezas;
-            const [x, y] = inicial.coordenada;
-            const [x2, y2] = final.coordenada;
+            const [x, y] = inicial.coordenadas;
+            const [x2, y2] = final.coordenadas;
             const result = [...state];
             console.log("REDUCER TABLERO")
             console.log(result)

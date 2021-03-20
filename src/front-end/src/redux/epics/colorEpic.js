@@ -1,36 +1,64 @@
 import { of } from "rxjs";
-import {map, tap, mergeMap, concatMap } from "rxjs/operators";
+import {map, tap, mergeMap, filter,  concatMap, concat, pluck} from "rxjs/operators";
 
 import { combineEpics, ofType } from "redux-observable";
-import { Color, Piezas } from "../actions";
+import { Color, Piezas, Seleccion } from "../actions";
 
+import CasillaOBS, {offColor} from "../../casilla/CasillaOBS";
+import {sendOFF} from "./EpicActions";
 
-const ColorADDEpic = ($action, $store) => (
-    $action.pipe(
-        ofType(color.ADD),
-        map(v => Color("add"))
+const PrototypeData = {
+    type: "COLOR_ADD",
+    data: {
+        coordenada: [0, 0]
+    }
+}
+
+const color  = {
+    "START": "START",
+    "CHECK": "CHECK",
+    "SEND_OFF": "SEND_OFF"
+}
+
+const ColorAdminEpic = ($value, $store) => $value.pipe(
+    ofType("START"),
+    mergeMap(value =>
+        of(
+            Seleccion(value.coordenada),
+            Color("add")
+        )
     )
 )
 
-const CheckResetEpic = ($action, $store) => (
-    $action.pipe(
-        ofType(color.CHECK),
-        map(v =>  $store.value.color.cantidad == 2 ? {type: color.RESET} : {type: "NULL"})
-))
 
-
-
-const ResetEpic = ($action, $store) => (
-    $action.pipe(
-        ofType(color.RESET),
-        mergeMap(v => of(
+const checkEpic = ($value, $store) => $value.pipe(
+    ofType(color.CHECK),
+    mergeMap(value =>
+        $store.pipe(
+            pluck("color_casillas", "cantidad"),
+            filter(value => value === 2)
+        )
+    ),
+    mergeMap(value =>
+        of(
             Color("reset"),
-            Piezas(pseudoList.data[0], "inicial", "X"),
-            Piezas(pseudoList.data[1], "final", "Y"),
-            ) ),
-        tap(v => pseudoList.reset()),
+            sendOFF()
+        )
     )
 )
 
-const MainColorEpic = combineEpics(CheckResetEpic, ResetEpic, ColorADDEpic)
+const OffSendEpic = ($value, $store)  => $value.pipe(
+    ofType("SEND_OFF"),
+    mergeMap(value =>
+        $store.pipe(
+            pluck("tablero"),
+            map(value => value.filter(value => value.filter(value => value.seleccion))),
+            tap(value => value.map(value => CasillaOBS.dispatch(offColor(value)) ))
+        )
+    ),
+    map(value => null)
+)
+
+
+const MainColorEpic = combineEpics()
 export default MainColorEpic
