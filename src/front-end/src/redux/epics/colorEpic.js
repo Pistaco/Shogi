@@ -1,32 +1,8 @@
 import { of } from "rxjs";
 import {map, tap, mergeMap, concatMap } from "rxjs/operators";
+
 import { combineEpics, ofType } from "redux-observable";
-
 import { Color, Piezas } from "../actions";
-
-export const color  = {
-    "START": "START",
-    "ADD": "ADD",
-    "CHECK": "CHECK",
-    "RESET": "RESET"
-}
-
-
-const pseudoList = {
-    data: [],
-    reset: () => pseudoList.data = [],
-    push: action => pseudoList.data.push(action.getValue()),
-    log: () => console.log("DESDE PSEUDO:   " + pseudoList.data) 
-}
-
-export const START_COLOR = (state) => {
-    state.dispatch({
-        type: "ADD"
-    })
-    state.dispatch({
-        type: "CHECK"
-    })
-}
 
 
 const ColorADDEpic = ($action, $store) => (

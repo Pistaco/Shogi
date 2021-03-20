@@ -2,7 +2,6 @@ import {useState, useEffect} from "react";
 import { state } from "../components/tablero";
 import { START_COLOR } from "../redux/epics/colorEpic";
 import CasillaUI from "./casilla_ui"
-import CasillaObserver from "./casillaObs"
 
 
 const usePieza = (state, row, column) => {
@@ -22,10 +21,6 @@ const CasillaCont = ({row, column}) => {
         colorChange()
     }
 
-    useEffect(() => {
-        const observer = CasillaObserver()
-        return () => observer.unsubscribe()
-    }, [])
 
     return <CasillaUI  pieza={pieza} colorS={color} onClick={logic}/>
 }

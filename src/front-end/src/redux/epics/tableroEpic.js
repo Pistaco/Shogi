@@ -1,9 +1,6 @@
 import { ofType } from "redux-observable"
 import { map } from "rxjs/operators"
 
-const tablero = {
-    MOVER: "MOVER"
-}
 
 
 const TableroEpic = ($action, $state) => (

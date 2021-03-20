@@ -2,18 +2,10 @@
 // import {of, Subject} from "rxjs";
 // import {ofType} from "redux-observable";
 
-
 const {ofType} = require("redux-observable")
 const {of,  Subject} = require("rxjs")
 const {pluck, filter, map, tap, concat, concatMap, mergeMap} = require("rxjs/operators")
 
-
-
-
-const ProtypeState = {
-    data: {pieza: "HW"},
-    getState: () => ProtypeState.data
-}
 
 // Type_actions
 const OFF_COLOR = "OFFCOLOR"
@@ -21,11 +13,23 @@ const ACTUALIZAR_PIEZA = "ACTPIEZA"
 
 //
 
-const casillaObs = () => (new Subject())
+// Actions
+const offColor = value => ({
+    type: "OFFCOLOR",
+    data: {
+        coordenada: value
+    }
+})
+
+// SUBJECTS
+
+const OBScasilla = new Subject()
+
+const casillaObs = (casilla, [row, column]) => OBScasilla
     .pipe(
         mergeMap(value => of(value).pipe(
             pluck("data", "coordenada"),
-            filter(([x, y]) => x === 0 && y === 0),
+            filter(([x, y]) => x === row && y === column),
             map(valor => value),
         )),
         mergeMap(value =>
@@ -33,15 +37,12 @@ const casillaObs = () => (new Subject())
                 concat(
                     of(value).pipe(
                         ofType(OFF_COLOR),
-                        map(value => ({...value, color: false}))
+                        tap(value => console.log("COLOR")),
+                        tap(value => casilla.OFF_COLOR())
                     ),
                     of(value).pipe(
                         ofType(ACTUALIZAR_PIEZA),
-                        mergeMap(value =>
-                            of(ProtypeState.getState()).pipe(
-                                pluck("pieza"),
-                                map(valor => ({...value, pieza: valor})),
-                                )
+                        tap(value => console.log("ACTION2")
                         ),
                     ),
                     of(value).pipe(
@@ -53,24 +54,12 @@ const casillaObs = () => (new Subject())
         )
     )
 
-const prototypeData = (type, pieza, x, y) => ({
-    type,
-    data: {
-        coordenada: [x, y],
-        pieza,
-        color: true
-    }
-})
+//
 
+// SOFTWARE PACKING
 
-const $TEST = casillaObs()
-$TEST.subscribe(console.log)
-$TEST.next(
-    {
-        type: ACTUALIZAR_PIEZA,
-        data: {
-            coordenada: [2, 0],
-            color: true,
-        }
-    }
-)
+export default {
+    obs: OBScasilla,
+    dispatch: next => OBScasilla.next(next),
+    listen: (casilla, coordenadas) => casillaObs(casilla,coordenadas).subscribe()
+}
