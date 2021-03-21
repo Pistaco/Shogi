@@ -15,7 +15,7 @@ const ACTUALIZAR_PIEZA = "ACTPIEZA"
 
 // Actions
 export const offColor = value => ({
-    type: OFFCOLOR,
+    type: OFF_COLOR,
     data: {
         coordenada: value
     }

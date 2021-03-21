@@ -18,7 +18,7 @@ function tableroReducer(state = inicialState.tablero, action) {
         case T_A.SELECCION:
             const [x3, y3] = action.data.coordenada
             const result2 = [...state]
-            result2[x3][y3].seleccionar = true
+            result2[x3][y3].seleccion = true
             return result2
 
         default:

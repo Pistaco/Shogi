@@ -22,9 +22,10 @@ const color  = {
 
 const ColorAdminEpic = ($value, $store) => $value.pipe(
     ofType("START"),
+    tap(value => console.log("COLOR_START")),
     mergeMap(value =>
         of(
-            Seleccion(value.coordenada),
+            Seleccion(value.data.coordenada),
             Color("add")
         )
     )
@@ -35,7 +36,9 @@ const checkEpic = ($value, $store) => $value.pipe(
     ofType(color.CHECK),
     mergeMap(value =>
         $store.pipe(
-            pluck("color_casillas", "cantidad"),
+            tap(value => console.log("CHECK")),
+            pluck("color", "cantidad"),
+            tap(console.log),
             filter(value => value === 2)
         )
     ),
@@ -49,16 +52,18 @@ const checkEpic = ($value, $store) => $value.pipe(
 
 const OffSendEpic = ($value, $store)  => $value.pipe(
     ofType("SEND_OFF"),
+    tap(value => console.log("COLOR_OFF")),
     mergeMap(value =>
         $store.pipe(
             pluck("tablero"),
-            map(value => value.filter(value => value.filter(value => value.seleccion))),
-            tap(value => value.map(value => CasillaOBS.dispatch(offColor(value)) ))
+            map(value => value.map(value => value.filter(value => value.seleccion)).filter(value => value.length)),
+            tap(value => value.map(value => value.map(value => CasillaOBS.dispatch(offColor(value.coordenada))))),
+            map(value => ({type: null}))
         )
     ),
-    map(value => null)
+
 )
 
 
-const MainColorEpic = combineEpics()
+const MainColorEpic = combineEpics(ColorAdminEpic, checkEpic, OffSendEpic)
 export default MainColorEpic
