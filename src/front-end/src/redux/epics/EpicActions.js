@@ -7,12 +7,18 @@ const tablero = {
 }
 
 // ACTIONS
-export const START_COLOR = (state) => {
+export const START_COLOR = (state, coordenada) => {
     state.dispatch({
-        type: "ADD"
+        type: "START",
+        data: {
+            coordenada,
+        }
     })
     state.dispatch({
-        type: "CHECK"
+        type: "CHECK",
+        data: {
+            coordenada,
+        }
     })
 }
 

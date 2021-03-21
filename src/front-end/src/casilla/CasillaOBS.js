@@ -37,7 +37,6 @@ const casillaObs = (casilla, [row, column]) => OBScasilla
                 concat(
                     of(value).pipe(
                         ofType(OFF_COLOR),
-                        tap(value => console.log("COLOR")),
                         tap(value => casilla.OFF_COLOR())
                     ),
                     of(value).pipe(

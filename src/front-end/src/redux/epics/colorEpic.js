@@ -1,11 +1,12 @@
-import { of } from "rxjs";
-import {map, tap, mergeMap, filter,  concatMap, concat, pluck} from "rxjs/operators";
+import { of, from} from "rxjs";
+import {map, tap, mergeMap, filter, concatMap, concat, pluck, debounceTime} from "rxjs/operators";
 
 import { combineEpics, ofType } from "redux-observable";
 import { Color, Piezas, Seleccion } from "../actions";
 
 import CasillaOBS, {offColor} from "../../casilla/CasillaOBS";
 import {sendOFF} from "./EpicActions";
+import {fromArray} from "rxjs/internal/observable/fromArray";
 
 const PrototypeData = {
     type: "COLOR_ADD",
@@ -22,7 +23,6 @@ const color  = {
 
 const ColorAdminEpic = ($value, $store) => $value.pipe(
     ofType("START"),
-    tap(value => console.log("COLOR_START")),
     mergeMap(value =>
         of(
             Seleccion(value.data.coordenada),
@@ -35,10 +35,8 @@ const ColorAdminEpic = ($value, $store) => $value.pipe(
 const checkEpic = ($value, $store) => $value.pipe(
     ofType(color.CHECK),
     mergeMap(value =>
-        $store.pipe(
-            tap(value => console.log("CHECK")),
+        of($store.value).pipe(
             pluck("color", "cantidad"),
-            tap(console.log),
             filter(value => value === 2)
         )
     ),
@@ -52,16 +50,13 @@ const checkEpic = ($value, $store) => $value.pipe(
 
 const OffSendEpic = ($value, $store)  => $value.pipe(
     ofType("SEND_OFF"),
-    tap(value => console.log("COLOR_OFF")),
-    mergeMap(value =>
-        $store.pipe(
-            pluck("tablero"),
-            map(value => value.map(value => value.filter(value => value.seleccion)).filter(value => value.length)),
-            tap(value => value.map(value => value.map(value => CasillaOBS.dispatch(offColor(value.coordenada))))),
-            map(value => ({type: null}))
-        )
-    ),
-
+    mergeMap(value => from($store.value.tablero)),
+    mergeMap(value => from(value).pipe(
+        filter(value => value.seleccion),
+        tap(value => CasillaOBS.dispatch(offColor(value.coordenada))),
+    )),
+    debounceTime(0),
+    map(value => Color("reset"))
 )
 
 

@@ -1,6 +1,10 @@
 import {useState, useEffect} from "react";
+
 import { state } from "../components/tablero";
-import { START_COLOR } from "../redux/epics/colorEpic";
+
+import {START_COLOR} from "../redux/epics/EpicActions";
+import {Seleccion} from "../redux/actions";
+
 import CasillaUI from "./casilla_ui"
 import CasillaOBS from "./CasillaOBS";
 
@@ -15,30 +19,23 @@ const CasillaCont = ({row, column}) => {
 
     const [pieza, HandPieza] = usePieza(state, row, column)
     const [color, HandColor] = useState(false)
+    const coordenadas = [row, column]
 
     const colorChange = () => color ? HandColor(false): HandColor(true)
 
     useEffect(() => {
         const Sub = CasillaOBS.listen({
-            OFF_COLOR: () => {console.log("OBS OFF"); HandColor(false)}
-        }, [row, column])
+            OFF_COLOR: () => {
+                HandColor(false)
+                state.dispatch(Seleccion(coordenadas))
+            }
+        }, coordenadas)
         return () => Sub.unsubscribe()
     },[])
 
     const logic = () => {
         colorChange()
-        state.dispatch({
-            type: "START",
-            data: {
-                coordenada: [row, column]
-            }
-        })
-        state.dispatch({
-            type: "CHECK",
-            data: {
-                coordenada: [row, column]
-            }
-        })
+        START_COLOR(state, coordenadas)
     }
 
 

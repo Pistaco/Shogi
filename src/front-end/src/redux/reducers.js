@@ -9,8 +9,6 @@ function tableroReducer(state = inicialState.tablero, action) {
             const [x, y] = inicial.coordenadas;
             const [x2, y2] = final.coordenadas;
             const result = [...state];
-            console.log("REDUCER TABLERO")
-            console.log(result)
             result[x][y].pieza = null;
             result[x2][y2].pieza = inicial.pieza
             return result
@@ -18,7 +16,7 @@ function tableroReducer(state = inicialState.tablero, action) {
         case T_A.SELECCION:
             const [x3, y3] = action.data.coordenada
             const result2 = [...state]
-            result2[x3][y3].seleccion = true
+            result2[x3][y3].seleccion = !result2[x3][y3].seleccion
             return result2
 
         default:
@@ -30,19 +28,15 @@ function colorReducer(state = inicialState.color_casillas, action) {
     switch (action.type) {
         case C_A.COLOR_ADD:
             let {cantidad} = state
-            console.log("REDUCER: ADD")
-            console.log(cantidad)
             return {...state, cantidad: cantidad + 1}
 
         case C_A.RESET:
-            console.log("REDUCER: RESET")
             return {...state, cantidad: 0}
 
         case C_A.SWITCH:
             const valor = !state.permitir
             return {...state, permitir: valor}
         default:
-            console.log("COLOR")
             return state
     }
 }
@@ -66,8 +60,6 @@ function AutorizacionReducer(state = inicialState.Autorizacion, action) {
 function PiezasReducer(state = inicialState.piezas, {data, type}) {
     switch (type) {
         case P_A.INICIAL:
-            console.log("UWUWUUWUWUW")
-            console.log(data)
             return {...state, inicial: data}
         case P_A.FINAL:
             return {...state, final: data}
