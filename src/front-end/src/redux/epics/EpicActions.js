@@ -3,7 +3,8 @@
 
 
 const tablero = {
-    MOVER: "MOVER"
+    MOVER: "MOVER",
+    GESTIONAR: "GESTION_START"
 }
 
 // ACTIONS
@@ -24,4 +25,8 @@ export const START_COLOR = (state, coordenada) => {
 
 export const sendOFF = () => ({
     type: "SEND_OFF"
+})
+
+export const gestionStart = ()  => ({
+    type: "GESTION_START"
 })

@@ -5,7 +5,7 @@ import { combineEpics, ofType } from "redux-observable";
 import { Color, Piezas, Seleccion } from "../actions";
 
 import CasillaOBS, {offColor} from "../../casilla/CasillaOBS";
-import {sendOFF} from "./EpicActions";
+import {gestionStart, sendOFF} from "./EpicActions";
 import {fromArray} from "rxjs/internal/observable/fromArray";
 
 const PrototypeData = {
@@ -43,7 +43,7 @@ const checkEpic = ($value, $store) => $value.pipe(
     mergeMap(value =>
         of(
             Color("reset"),
-            sendOFF()
+            gestionStart()
         )
     )
 )
@@ -56,6 +56,7 @@ const OffSendEpic = ($value, $store)  => $value.pipe(
         tap(value => CasillaOBS.dispatch(offColor(value.coordenada))),
     )),
     debounceTime(0),
+    tap(value => console.log("RESET")),
     map(value => Color("reset"))
 )
 

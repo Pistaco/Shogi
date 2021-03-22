@@ -8,6 +8,10 @@ export const Mover = state => {
     }
 }
 
+export const Mover_seleccionados = () => ({
+    type: T_A.MOVER_SELECCIONADOS
+})
+
 export const Seleccion = coordenada => ({
     type: T_A.SELECCION,
     data: {

@@ -1,5 +1,5 @@
 import inicialState from "./initial"
-import {T_A, C_A, A_A, P_A} from "./type_actions"
+import {A_A, C_A, P_A, T_A} from "./type_actions"
 import {combineReducers} from "redux"
 
 function tableroReducer(state = inicialState.tablero, action) {
@@ -13,11 +13,22 @@ function tableroReducer(state = inicialState.tablero, action) {
             result[x2][y2].pieza = inicial.pieza
             return result
 
+        case T_A.MOVER_SELECCIONADOS:
+            const seleccionados = []
+            const result2 = state.tablero
+            result2.forEach(value =>
+                value.filter(value => value.seleccion).forEach(value => seleccionados.push(value)) )
+            const [inicial1, final1] = seleccionados
+            result2[inicial1.coordenadas.x][inicial1.coordenadas.y].pieza = final1.pieza
+            result2[final1.coordenadas.x][final1.coordenadas.y].pieza = inicial1.pieza
+            return {...state, tablero: result2}
+
         case T_A.SELECCION:
+            console.log("SELEC")
             const [x3, y3] = action.data.coordenada
-            const result2 = [...state]
-            result2[x3][y3].seleccion = !result2[x3][y3].seleccion
-            return result2
+            const result3 = [...state]
+            result3[x3][y3].seleccion = !result3[x3][y3].seleccion
+            return result3
 
         default:
             return state

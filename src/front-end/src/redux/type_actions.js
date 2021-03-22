@@ -1,7 +1,8 @@
 
 export const T_A = {
     MOVER: "mover",
-    SELECCION: "SELECCION"
+    SELECCION: "SELECCION",
+    MOVER_SELECCIONADOS: "MOVER_SELECCIONADOS",
 }
 
 export const C_A = {

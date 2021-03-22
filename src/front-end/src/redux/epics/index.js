@@ -1,5 +1,5 @@
 import MainColorEpic  from "./colorEpic";
-import MainTableroEpic from "./tableroEpic";
+import MainTableroEpic from "./gestionEpic";
 
 import {combineEpics} from "redux-observable";
 
