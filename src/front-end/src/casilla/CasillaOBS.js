@@ -21,6 +21,13 @@ export const offColor = value => ({
     }
 })
 
+export const piezasAct = value => ({
+    type: ACTUALIZAR_PIEZA,
+    data: {
+        coordenada: value
+    }
+})
+
 // SUBJECTS
 
 const OBScasilla = new Subject()
@@ -41,8 +48,7 @@ const casillaObs = (casilla, [row, column]) => OBScasilla
                     ),
                     of(value).pipe(
                         ofType(ACTUALIZAR_PIEZA),
-                        tap(value => console.log("ACTION2")
-                        ),
+                        tap(value => casilla.ACTUALIZAR_PIEZA())
                     ),
                     of(value).pipe(
                         ofType("action3"),

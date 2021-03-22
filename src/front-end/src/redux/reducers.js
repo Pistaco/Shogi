@@ -1,6 +1,7 @@
 import inicialState from "./initial"
 import {A_A, C_A, P_A, T_A} from "./type_actions"
 import {combineReducers} from "redux"
+import {Mover_seleccionados} from "./actions";
 
 function tableroReducer(state = inicialState.tablero, action) {
     switch (action.type) {
@@ -15,13 +16,15 @@ function tableroReducer(state = inicialState.tablero, action) {
 
         case T_A.MOVER_SELECCIONADOS:
             const seleccionados = []
-            const result2 = state.tablero
+            const result2 = [...state]
             result2.forEach(value =>
                 value.filter(value => value.seleccion).forEach(value => seleccionados.push(value)) )
             const [inicial1, final1] = seleccionados
-            result2[inicial1.coordenadas.x][inicial1.coordenadas.y].pieza = final1.pieza
-            result2[final1.coordenadas.x][final1.coordenadas.y].pieza = inicial1.pieza
-            return {...state, tablero: result2}
+            const {coordenada: [x0, y0], pieza: pieza0} = inicial1
+            const {coordenada: [x1, y1], pieza: pieza1} = final1
+            result2[x0][y0].pieza = pieza1
+            result2[x1][y1].pieza = pieza0
+            return result2
 
         case T_A.SELECCION:
             console.log("SELEC")

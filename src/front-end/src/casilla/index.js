@@ -10,14 +10,16 @@ import CasillaOBS from "./CasillaOBS";
 
 
 const usePieza = (state, row, column) => {
+    const setPieza = () => {
         const {tablero} = state.getState()
-        const inicial = tablero[row][column].pieza
-        return useState(inicial)
+        return tablero[row][column].pieza
+    }
+    return [setPieza, useState(setPieza)]
 }
 
 const CasillaCont = ({row, column}) => {
 
-    const [pieza, HandPieza] = usePieza(state, row, column)
+    const [setPieza, [pieza, HandPieza]] = usePieza(state, row, column)
     const [color, HandColor] = useState(false)
     const coordenadas = [row, column]
 
@@ -28,7 +30,8 @@ const CasillaCont = ({row, column}) => {
             OFF_COLOR: () => {
                 HandColor(false)
                 state.dispatch(Seleccion(coordenadas))
-            }
+            },
+            ACTUALIZAR_PIEZA: () => HandPieza(setPieza())
         }, coordenadas)
         return () => Sub.unsubscribe()
     },[])

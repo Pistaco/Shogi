@@ -4,7 +4,7 @@
 
 const tablero = {
     MOVER: "MOVER",
-    GESTIONAR: "GESTION_START"
+    GESTIONAR: "GESTION_START",
 }
 
 // ACTIONS
@@ -29,4 +29,8 @@ export const sendOFF = () => ({
 
 export const gestionStart = ()  => ({
     type: "GESTION_START"
+})
+
+export const sendActualizar = () => ({
+    type: "SEND_ACTUALIZAR"
 })
